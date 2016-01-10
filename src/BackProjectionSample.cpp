@@ -38,6 +38,10 @@ int BackProjectionSample::execute() {
     }
 
     // (1)2つ入力画像（探索画像，テンプレート画像）の色空間を，RGBからHSVに変換
+    // RGBではなく、HSV色空間でのマッチングを実施。
+    // （RGBと比較して、HSV色空間は人間の色の認識と親和性があり、色相と彩度の組み合わせは照明変化に対して変化が少ないため。）
+    // キャプチャされた画像に対してH（Hue：色相）とS（Saturation：彩度）のレンジが近い領域を、
+    // テンプレート画像にマッチしている領域として検出している。
     src_hsv = cvCreateImage(cvGetSize(src_img), IPL_DEPTH_8U, 3);
     tmp_hsv = cvCreateImage(cvGetSize(tmp_img), IPL_DEPTH_8U, 3);
     cvCvtColor(src_img, src_hsv, CV_BGR2HSV);
